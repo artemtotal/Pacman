@@ -1,7 +1,7 @@
 
 
 # Pacman Game
-
+# Our Game
 
 Ein klassisches Pacman-Spiel, entwickelt mit modernen Web-Technologien wie JavaScript, HTML, React, CSS und MySQL.
 
