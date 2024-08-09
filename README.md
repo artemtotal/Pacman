@@ -1,70 +1,120 @@
-# Getting Started with Create React App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Available Scripts
+# Pacman Game
 
-In the project directory, you can run:
 
-### `npm start`
+Ein klassisches Pacman-Spiel, entwickelt mit modernen Web-Technologien wie JavaScript, HTML, React, CSS und MySQL.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## Inhaltsverzeichnis
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+- [Über das Projekt](#über-das-projekt)
+- [Technologien](#technologien)
+- [Installation](#installation)
+- [Nutzung](#nutzung)
+- [Features](#features)
+- [Datenbank-Setup](#datenbank-setup)
+- [Bekannte Probleme](#bekannte-probleme)
+- [Mitwirken](#mitwirken)
+- [Lizenz](#lizenz)
+- [Kontakt](#kontakt)
 
-### `npm test`
+## Über das Projekt
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Dieses Pacman-Spiel ist eine moderne Umsetzung des klassischen Spiels mit einer Web-Frontend- und Datenbank-Backend-Integration. Es ist sowohl für Einzelspieler als auch für Multiplayer-Spielmodi geeignet und speichert Highscores in einer MySQL-Datenbank.
 
-### `npm run build`
+## Technologien
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+- **Frontend**: HTML, CSS, JavaScript, React
+- **Backend**: Node.js, Express
+- **Datenbank**: MySQL
+- **Build-Tools**: Webpack, Babel
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## Installation
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### Voraussetzungen
 
-### `npm run eject`
+Stelle sicher, dass Node.js und MySQL auf deinem System installiert sind.
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+### Lokale Installation
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+1. Repository klonen:
+    ```bash
+    git clone https://github.com/dein-username/pacman-game.git
+    cd pacman-game
+    ```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+2. Abhängigkeiten installieren:
+    ```bash
+    npm install
+    ```
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+3. MySQL-Datenbank konfigurieren (siehe [Datenbank-Setup](#datenbank-setup)).
 
-## Learn More
+4. Projekt starten:
+    ```bash
+    npm start
+    ```
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+5. Öffne deinen Browser und gehe zu `http://localhost:3000`.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+## Nutzung
 
-### Code Splitting
+- Verwende die Pfeiltasten auf deiner Tastatur, um Pacman zu steuern.
+- Sammle alle Punkte auf dem Spielfeld, um das Level abzuschließen.
+- Vermeide die Geister, oder esse eine Power-Pille, um sie zu jagen.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+## Features
 
-### Analyzing the Bundle Size
+- **Responsive Design**: Spielbar auf verschiedenen Gerätetypen.
+- **Multiplayer-Modus**: Spiele gegen Freunde oder andere Online-Spieler.
+- **Highscore-Tabelle**: Speichert und zeigt die besten Spielergebnisse.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+## Datenbank-Setup
 
-### Making a Progressive Web App
+1. Erstelle eine MySQL-Datenbank:
+    ```sql
+    CREATE DATABASE pacman_game;
+    ```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+2. Importiere das Datenbankschema:
+    ```bash
+    mysql -u yourusername -p pacman_game < database/schema.sql
+    ```
 
-### Advanced Configuration
+3. Konfiguriere die Datenbankverbindung in `config/database.js`:
+    ```javascript
+    module.exports = {
+        host: "localhost",
+        user: "yourusername",
+        password: "yourpassword",
+        database: "pacman_game"
+    };
+    ```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+## Bekannte Probleme
 
-### Deployment
+- **Geister-KI**: Die Bewegungsmuster der Geister sind manchmal unvorhersehbar.
+- **Performance**: Bei älteren Geräten kann es zu Performance-Problemen kommen.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+## Mitwirken
 
-### `npm run build` fails to minify
+Beiträge sind willkommen! Bitte folge diesen Schritten:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+1. Forke das Repository
+2. Erstelle einen neuen Branch (`git checkout -b feature/DeinFeature`)
+3. Committe deine Änderungen (`git commit -am 'Füge neues Feature hinzu'`)
+4. Push den Branch (`git push origin feature/DeinFeature`)
+5. Erstelle einen Pull Request
+
+## Lizenz
+
+Dieses Projekt steht unter der MIT-Lizenz. Weitere Informationen findest du in der [LICENSE-Datei](LICENSE).
+
+## Kontakt
+
+Erstellt von [Dein Name](https://github.com/dein-username) - kontaktiere mich gerne bei Fragen!
+
+---
+
+Diese Vorlage sollte dir als Ausgangspunkt dienen. Du kannst sie anpassen, um zusätzliche Informationen oder spezifische Details zu deinem Projekt hinzuzufügen.
+
