@@ -35,6 +35,17 @@ Dieses Pacman-Spiel ist eine moderne Umsetzung des klassischen Spiels mit einer 
 
 Stelle sicher, dass Node.js und MySQL auf deinem System installiert sind.
 
+Beim Entwickeln des Pacman-Spiels ist es wichtig, sicherzustellen, dass Node.js und MySQL auf deinem System installiert sind, aus den folgenden Gründen:
+1. Node.js
+Serverseitige Logik: Node.js wird für das Backend des Spiels verwendet. Es stellt die serverseitige Logik bereit, die für die Verwaltung der Spielmechanik, der Benutzerinteraktionen und der Kommunikation zwischen dem Frontend und der Datenbank notwendig ist.
+Abhängigkeiten und Pakete: Node.js ist notwendig, um die benötigten JavaScript-Bibliotheken und Frameworks zu installieren und zu verwalten, wie z.B. Express, das als Webframework dient.
+Lokaler Entwicklungsserver: Mit Node.js kannst du das Spiel auf einem lokalen Entwicklungsserver ausführen, um es während der Entwicklung zu testen und zu debuggen.
+2. MySQL
+Datenbankverwaltung: MySQL wird verwendet, um die Daten des Spiels zu speichern und zu verwalten, insbesondere die Highscores, Benutzerinformationen und Spielstände.
+Persistente Datenspeicherung: MySQL sorgt dafür, dass die Daten auch nach dem Schließen der Anwendung erhalten bleiben. So können Benutzer ihre Ergebnisse speichern und später abrufen.
+Datenbankabfragen: Das Spiel benötigt eine Datenbank, um Daten effizient zu speichern und abzurufen. MySQL bietet hierfür die nötige Performance und Funktionalität.
+Ohne diese Software wäre es nicht möglich, die volle Funktionalität des Spiels zu entwickeln und zu testen. Node.js und MySQL bilden somit die technische Grundlage für die Server- und Datenbankkomponenten des Spiels.
+
 ### Lokale Installation
 
 1. Repository klonen:
