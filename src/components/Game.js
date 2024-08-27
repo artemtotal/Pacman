@@ -13,8 +13,8 @@ const Game = () => {
   const [gameWin, setGameWin] = useState(false);
   const [powerPillActive, setPowerPillActive] = useState(false);
   const [isGameOver, setIsGameOver] = useState(false);
-
   const gameBoardRef = useRef();
+  const gameIntervalRef = useRef();
 
   useEffect(() => {
     const board = GameBoard.createGameBoard(document.querySelector('#game'), LEVEL);
@@ -57,32 +57,28 @@ const Game = () => {
   };
 
   const startGameLoop = () => {
-    const gameInterval = setInterval(() => {
-      if (!isGameOver) {
-        gameLoop();
-      } else {
-        clearInterval(gameInterval);
-      }
+    gameIntervalRef.current = setInterval(() => {
+      gameLoop();
     }, 80);
   };
 
   const gameLoop = () => {
     // 1. Pacman bewegen
     gameBoard.moveCharacter(pacman);
-    
+
     // 2. Geister bewegen
     ghosts.forEach(ghost => gameBoard.moveCharacter(ghost));
-    
+
     // 3. Überprüfung der Kollisionen zwischen Pacman und Geistern
     checkCollision();
-    
+
     // 4. Überprüfung, ob Pacman einen Punkt (DOT) gegessen hat
     if (gameBoard.objectExist(pacman.pos, OBJECT_TYPE.DOT)) {
       gameBoard.removeObject(pacman.pos, [OBJECT_TYPE.DOT]);
       gameBoard.dotCount--;
       setScore(prev => prev + 10);
     }
-    
+
     // 5. Überprüfung, ob Pacman eine Pille (PILL) gegessen hat
     if (gameBoard.objectExist(pacman.pos, OBJECT_TYPE.PILL)) {
       gameBoard.removeObject(pacman.pos, [OBJECT_TYPE.PILL]);
@@ -90,19 +86,21 @@ const Game = () => {
       pacman.powerPill = true;
       setScore(prev => prev + 50);
 
+      // Alle Geister in den Schreckensmodus versetzen
       ghosts.forEach(ghost => ghost.isScared = true);
 
       setTimeout(() => {
+        // Power-Pill-Effekt beenden
         setPowerPillActive(false);
         pacman.powerPill = false;
-        ghosts.forEach(ghost => ghost.isScared = false);
+        ghosts.forEach(ghost => (ghost.isScared = false)); // Alle Geister wieder gefährlich machen
       }, 10000);
     }
-    
+
     // 6. Überprüfung, ob alle Punkte (DOTs) gegessen wurden
     if (gameBoard.dotCount === 0) {
       setGameWin(true);
-      setIsGameOver(true);
+      gameOver();
     }
   };
 
@@ -115,12 +113,12 @@ const Game = () => {
         gameBoard.removeObject(collidedGhost.pos, [
           OBJECT_TYPE.GHOST,
           OBJECT_TYPE.SCARED,
-          collidedGhost.name
+          collidedGhost.name,
         ]);
         collidedGhost.reset();
         setScore(prev => prev + 100);
       } else {
-        gameOver();
+        gameOver(); // Spiel beenden, wenn keine Power-Pill aktiv ist
       }
     }
   };
@@ -128,6 +126,9 @@ const Game = () => {
   const gameOver = () => {
     setIsGameOver(true);
     setGameWin(false);
+    clearInterval(gameIntervalRef.current); // Stoppt das Spiel
+    document.removeEventListener('keydown', handleKeyDown); // Event-Listener entfernen
+    gameBoard.showGameStatus(false); // Zeigt "Game Over" an
   };
 
   return (
