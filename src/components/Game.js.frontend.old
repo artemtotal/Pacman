@@ -13,7 +13,6 @@ const Game = () => {
   const [gameWin, setGameWin] = useState(false);
   const [powerPillActive, setPowerPillActive] = useState(false);
   const [isGameOver, setIsGameOver] = useState(false);
-  const [scores, setScores] = useState([]);
   const gameBoardRef = useRef();
   const gameIntervalRef = useRef();
 
@@ -37,10 +36,6 @@ const Game = () => {
       return () => document.removeEventListener('keydown', handleKeyDown);
     }
   }, [pacman]);
-
-  useEffect(() => {
-    fetchScores(); // Holen Sie sich die Punktestände, wenn die Komponente geladen wird
-  }, []);
 
   const handleKeyDown = (e) => {
     if (pacman) {
@@ -134,30 +129,6 @@ const Game = () => {
     clearInterval(gameIntervalRef.current); // Stoppt das Spiel
     document.removeEventListener('keydown', handleKeyDown); // Event-Listener entfernen
     gameBoard.showGameStatus(false); // Zeigt "Game Over" an
-    saveScore('Player1', score); // Speichern des Punktestandes bei Spielende
-  };
-
-  const saveScore = (name, score) => {
-    fetch('http://localhost:5000/save-score', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ name, score }),
-    })
-      .then(response => response.json())
-      .then(data => {
-        console.log('Score saved:', data);
-        fetchScores(); // Aktualisieren Sie die Punktestände nach dem Speichern
-      })
-      .catch(error => console.error('Error:', error));
-  };
-
-  const fetchScores = () => {
-    fetch('http://localhost:5000/scores')
-      .then(response => response.json())
-      .then(data => setScores(data))
-      .catch(error => console.error('Error:', error));
   };
 
   return (
@@ -167,15 +138,6 @@ const Game = () => {
       {isGameOver && <div>Game Over</div>}
       {gameWin && <div>You Win!</div>}
       <button onClick={startGame}>Start Game</button>
-
-      <h2>High Scores</h2>
-      <ul>
-        {scores.map((s, index) => (
-          <li key={index}>
-            {s.name}: {s.score}
-          </li>
-        ))}
-      </ul>
     </div>
   );
 };
