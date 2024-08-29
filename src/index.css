@@ -38,6 +38,9 @@ body {
 }
 
 #score {
+  position: absolute; /* Change to absolute positioning */
+  top: 10px; /* Position it near the top */
+  left: 10px; /* Position it near the left */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -45,10 +48,10 @@ body {
   height: 50px;
   border: 5px darkblue solid;
   background: black;
-  margin-top: 20px;
   color: white;
   font-family: Arial, Helvetica, sans-serif;
   font-size: 2rem;
+  margin-top: 0; /* Remove the previous margin */
 }
 
 #start-button {
@@ -184,4 +187,41 @@ body {
       0 20px
     );
   }
+}
+
+.h2 {
+  position: absolute; /* Set position to absolute */
+  top: 10px; /* Position it near the top */
+  right: 10px; /* Position it near the right */
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 1.5rem;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 200px;
+  height: 50px;
+  border: 5px darkblue solid;
+  background: black;
+  margin-top: 0; 
+}
+
+
+/* Remove the previous margin */
+
+.h3 {
+  position: absolute; /* Set position to absolute */
+  top: 50px; /* Position it near the top */
+  right: 10px; /* Position it near the right */
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 1.5rem;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 200px;
+  height: 50px;
+  border: 5px darkblue solid;
+  background: black;
+  margin-top: 0; 
 }

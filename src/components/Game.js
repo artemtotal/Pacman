@@ -199,15 +199,20 @@ const Game = () => {
       {isGameOver && <div>Game Over</div>}
       {gameWin && <div>You Win!</div>}
       <button onClick={startGame}>Start Game</button>
-
-      <h2>High Scores</h2>
-      <ul>
-        {scores.map((s, index) => (
-          <li key={index}>
-            {s.name}: {s.score}
-          </li>
-        ))}
-      </ul>
+  
+      {/* High Scores Title */}
+      <h2 className="h2">High Scores</h2>
+  
+      {/* High Scores List */}
+      <div className="h3">
+        <ul>
+          {scores.map((s, index) => (
+            <li key={index}>
+              {s.name}: {s.score}
+            </li>
+          ))}
+        </ul>
+      </div>
     </div>
   );
 };
