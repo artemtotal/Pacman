@@ -18,10 +18,24 @@ body {
 }
 
 #game {
-  position: absolute;
+  position: relative; 
   top: 10px;
   display: inline-grid;
   background: black;
+}
+
+
+#game button {
+  position: absolute;
+  top: 70px; /* Располагаем под элементом #score */
+  left: 10px; /* Смещаем кнопку влево */
+  background-color: #4CAF50; /* Цвет фона */
+  color: white; /* Цвет текста */
+  padding: 10px 20px; /* Отступы */
+  border: none; /* Убираем рамку */
+  border-radius: 5px; /* Скругленные углы */
+  cursor: pointer; /* Курсор указывает на возможность нажатия */
+  z-index: 10; /* Увеличиваем z-index, чтобы кнопка находилась над другими элементами */
 }
 
 .game-status {

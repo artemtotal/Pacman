@@ -194,24 +194,29 @@ const Game = () => {
 
   return (
     <div id="wrapper">
-      <div id="game" ref={gameBoardRef}></div>
       <div id="score">Score: {score}</div>
-      {isGameOver && <div>Game Over</div>}
-      {gameWin && <div>You Win!</div>}
-      <button onClick={startGame}>Start Game</button>
+      <button onClick={startGame} style={{ position: 'absolute', top: '70px', left: '10px' }}>Start Game</button>
+  
+      <div id="game" ref={gameBoardRef} style={{ gridTemplateColumns: 'repeat(20, 20px)' }}>
+        {isGameOver && <div>Game Over</div>}
+        {gameWin && <div>You Win!</div>}
+      </div>
       
       <h2>
         High Scores
-      <ul>
-        {scores.map((s, index) => (
-          <li key={index}>
-            {s.name}: {s.score}
-          </li>
-        ))}
-      </ul>
+        <ul>
+          {scores.map((s, index) => (
+            <li key={index}>
+              {s.name}: {s.score}
+            </li>
+          ))}
+        </ul>
       </h2>
     </div>
   );
+  
+  
+  
 };
 
 export default Game;

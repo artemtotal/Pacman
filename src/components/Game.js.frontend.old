@@ -5,6 +5,12 @@ import Ghost from './Ghost';
 import { LEVEL, OBJECT_TYPE } from '../setup/setup';
 import { randomMovement } from './GhostMoves';
 
+const deathSound = new Audio('/sounds/Blyat-new.wav');
+const eat_ghost = new Audio('/sounds/Nam_nam_Chris_new.wav');
+const game_start = new Audio('/sounds/LetsdidIt_Marcel.wav');
+const munch = new Audio('/sounds/munch.wav');
+const pill = new Audio('/sounds/Betablocker.wav');
+
 const Game = () => {
   const [gameBoard, setGameBoard] = useState(null);
   const [pacman, setPacman] = useState(null);
@@ -13,6 +19,7 @@ const Game = () => {
   const [gameWin, setGameWin] = useState(false);
   const [powerPillActive, setPowerPillActive] = useState(false);
   const [isGameOver, setIsGameOver] = useState(false);
+  const [scores, setScores] = useState([]);
   const gameBoardRef = useRef();
   const gameIntervalRef = useRef();
 
@@ -37,10 +44,31 @@ const Game = () => {
     }
   }, [pacman]);
 
+  useEffect(() => {
+    fetchScores();
+  }, []);
+
   const handleKeyDown = (e) => {
     if (pacman) {
       pacman.handleKeyInput(e, gameBoard.objectExist.bind(gameBoard));
     }
+  };
+
+  const PlaydeathSound = () => {
+    deathSound.play();
+  };
+  const Playeat_ghost = () => {
+    eat_ghost.play();
+  };
+  
+  const Playgame_start = () => {
+    game_start.play();
+  };
+  const Playmunch = () => {
+    munch.play();
+  };
+  const Playpill = () => {
+    pill.play();
   };
 
   const startGame = () => {
@@ -52,8 +80,9 @@ const Game = () => {
     gameBoard.createGrid(LEVEL);
     pacman.reset();
     ghosts.forEach(ghost => ghost.reset());
-
+    
     startGameLoop();
+    Playgame_start();
   };
 
   const startGameLoop = () => {
@@ -63,41 +92,33 @@ const Game = () => {
   };
 
   const gameLoop = () => {
-    // 1. Pacman bewegen
     gameBoard.moveCharacter(pacman);
-
-    // 2. Geister bewegen
     ghosts.forEach(ghost => gameBoard.moveCharacter(ghost));
-
-    // 3. Überprüfung der Kollisionen zwischen Pacman und Geistern
     checkCollision();
 
-    // 4. Überprüfung, ob Pacman einen Punkt (DOT) gegessen hat
     if (gameBoard.objectExist(pacman.pos, OBJECT_TYPE.DOT)) {
       gameBoard.removeObject(pacman.pos, [OBJECT_TYPE.DOT]);
       gameBoard.dotCount--;
+      Playmunch();
       setScore(prev => prev + 10);
     }
 
-    // 5. Überprüfung, ob Pacman eine Pille (PILL) gegessen hat
     if (gameBoard.objectExist(pacman.pos, OBJECT_TYPE.PILL)) {
       gameBoard.removeObject(pacman.pos, [OBJECT_TYPE.PILL]);
       setPowerPillActive(true);
       pacman.powerPill = true;
+      Playpill();
       setScore(prev => prev + 50);
 
-      // Alle Geister in den Schreckensmodus versetzen
       ghosts.forEach(ghost => ghost.isScared = true);
 
       setTimeout(() => {
-        // Power-Pill-Effekt beenden
         setPowerPillActive(false);
         pacman.powerPill = false;
-        ghosts.forEach(ghost => (ghost.isScared = false)); // Alle Geister wieder gefährlich machen
+        ghosts.forEach(ghost => (ghost.isScared = false));
       }, 10000);
     }
 
-    // 6. Überprüfung, ob alle Punkte (DOTs) gegessen wurden
     if (gameBoard.dotCount === 0) {
       setGameWin(true);
       gameOver();
@@ -109,16 +130,16 @@ const Game = () => {
 
     if (collidedGhost) {
       if (pacman.powerPill) {
-        // Geist essen und von der Karte entfernen
         gameBoard.removeObject(collidedGhost.pos, [
           OBJECT_TYPE.GHOST,
           OBJECT_TYPE.SCARED,
           collidedGhost.name,
         ]);
         collidedGhost.reset();
+        Playeat_ghost();
         setScore(prev => prev + 100);
       } else {
-        gameOver(); // Spiel beenden, wenn keine Power-Pill aktiv ist
+        gameOver();
       }
     }
   };
@@ -126,9 +147,34 @@ const Game = () => {
   const gameOver = () => {
     setIsGameOver(true);
     setGameWin(false);
-    clearInterval(gameIntervalRef.current); // Stoppt das Spiel
-    document.removeEventListener('keydown', handleKeyDown); // Event-Listener entfernen
-    gameBoard.showGameStatus(false); // Zeigt "Game Over" an
+    PlaydeathSound();
+    clearInterval(gameIntervalRef.current);
+    document.removeEventListener('keydown', handleKeyDown);
+    gameBoard.showGameStatus(false);
+    saveScore('Player1', score);
+  };
+
+  const saveScore = (name, score) => {
+    fetch('http://localhost:5000/save-score', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ name, score }),
+    })
+      .then(response => response.json())
+      .then(data => {
+        console.log('Score saved:', data);
+        fetchScores();
+      })
+      .catch(error => console.error('Error:', error));
+  };
+
+  const fetchScores = () => {
+    fetch('http://localhost:5000/scores')
+      .then(response => response.json())
+      .then(data => setScores(data))
+      .catch(error => console.error('Error:', error));
   };
 
   return (
@@ -138,6 +184,17 @@ const Game = () => {
       {isGameOver && <div>Game Over</div>}
       {gameWin && <div>You Win!</div>}
       <button onClick={startGame}>Start Game</button>
+
+      <h2>
+        High Scores
+        <ul>
+          {scores.map((s, index) => (
+            <li key={index}>
+              {s.name}: {s.score}
+            </li>
+          ))}
+        </ul>
+      </h2>
     </div>
   );
 };
