@@ -3,8 +3,8 @@
 }
 
 body {
-  background: url(C:\Users\matze\Documents\VS-Code\Pacman\Pacman\src\macht.jpg)
-  
+  background: url("./Pictures/background.jpg")
+ 
 }
 
 #wrapper {
