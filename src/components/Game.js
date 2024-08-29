@@ -199,8 +199,9 @@ const Game = () => {
       {isGameOver && <div>Game Over</div>}
       {gameWin && <div>You Win!</div>}
       <button onClick={startGame}>Start Game</button>
-
-      <h2>High Scores</h2>
+      
+      <h2>
+        High Scores
       <ul>
         {scores.map((s, index) => (
           <li key={index}>
@@ -208,6 +209,7 @@ const Game = () => {
           </li>
         ))}
       </ul>
+      </h2>
     </div>
   );
 };

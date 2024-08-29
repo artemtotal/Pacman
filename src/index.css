@@ -3,9 +3,11 @@
 }
 
 body {
-  background: url(C:\Users\matze\Documents\VS-Code\Pacman\Pacman\src\macht.jpg)
-  
-}
+    background: url("./Pictures/macht.jpg");
+    background-repeat: no-repeat; /* Verhindert das Wiederholen des Hintergrundbildes */
+    background-position: top center; /* Positioniert das Bild oben und zentriert es horizontal */
+    background-size: auto; /* Beibehaltung der Originalgröße des Bildes */
+  }
 
 #wrapper {
   position: relative;
@@ -16,14 +18,15 @@ body {
 }
 
 #game {
-  position: relative;
+  position: absolute;
+  top: 10px;
   display: inline-grid;
   background: black;
 }
 
 .game-status {
   position: absolute;
-  top: 0;
+  top: 10px;
   left: 0;
   display: flex;
   align-items: center;
@@ -38,6 +41,9 @@ body {
 }
 
 #score {
+  position: absolute; /* Change to absolute positioning */
+  top: 10px; /* Position it near the top */
+  left: 10px; /* Position it near the left */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -45,10 +51,10 @@ body {
   height: 50px;
   border: 5px darkblue solid;
   background: black;
-  margin-top: 20px;
   color: white;
   font-family: Arial, Helvetica, sans-serif;
   font-size: 2rem;
+  margin-top: 0; /* Remove the previous margin */
 }
 
 #start-button {
@@ -172,6 +178,23 @@ body {
   animation: chew 0.2s linear forwards infinite;
 }
 
+h2 {
+  position: absolute; /* Change to absolute positioning */
+  top: 10px; /* Position it near the top */
+  right: 10px; /* Position it near the left */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 200px;
+  height: 50px;
+  border: 5px darkblue solid;
+  background: black;
+  color: white;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 1.5rem;
+  margin-top: 0; /* Remove the previous margin */
+}
+
 @keyframes chew {
   50% {
     clip-path: polygon(
@@ -185,3 +208,27 @@ body {
     );
   }
 }
+
+/* CSS for the loading screen */
+
+.loading-screen {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  width: 100%;
+  background-image: url('./Pictures/macht.jpg'); /* Pfad zum Bild */
+  background-repeat: no-repeat; /* Verhindert das Wiederholen des Hintergrundbildes */
+  background-position: top center; /* Positioniert das Bild oben und zentriert es horizontal */
+  background-attachment: fixed; /* Bild bleibt beim Scrollen an der gleichen Stelle */
+  background-size: auto; /* Beibehaltung der Originalgröße des Bildes */
+  background-color: white; /* Hintergrundfarbe, falls das Bild nicht geladen wird */
+}
+
+
+.loading-image {
+  max-width: 100%;
+  height: auto;
+}
+
+
