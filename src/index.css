@@ -120,20 +120,41 @@ body {
 }
 
 .blinky {
-  background: red;
+  background-image: url("./Pictures/AlvinPacman1.png"); /* Pfad zum Bild von Blinky */
+  background-size: cover; /* Das Bild soll den gesamten Block abdecken */
+  width: 20px; /* Setzen Sie die Breite des Bildes */
+  height: 20px; /* Setzen Sie die Höhe des Bildes */
+  border-radius: 10px 10px 2px 2px; /* Falls Sie eine Abrundung benötigen */
+  border: none; /* Entfernen Sie den Rahmen, wenn er nicht benötigt wird */
 }
 
 .pinky {
-  background: pink;
+  background-image: url('./Pictures/ArtemPacman1.png'); /* Pfad zum Bild von Pinky */
+  background-size: cover;
+  width: 20px; /* Setzen Sie die Breite des Bildes */
+  height: 20px; /* Setzen Sie die Höhe des Bildes */
+  border-radius: 10px 10px 2px 2px;
+  border: none;
 }
 
 .inky {
-  background: cyan;
+  background-image: url('./Pictures/Screenshot_69.png'); /* Pfad zum Bild von Inky */
+  background-size: cover;
+  width: 20px; /* Setzen Sie die Breite des Bildes */
+  height: 20px; /* Setzen Sie die Höhe des Bildes */
+  border-radius: 10px 10px 2px 2px;
+  border: none;
 }
 
 .clyde {
-  background: orange;
+  background-image: url('./Pictures/Marcel.png'); /* Pfad zum Bild von Clyde */
+  background-size: cover;
+  width: 20px; /* Setzen Sie die Breite des Bildes */
+  height: 20px; /* Setzen Sie die Höhe des Bildes */
+  border-radius: 10px 10px 2px 2px;
+  border: none;
 }
+
 
 .pacman {
   background: yellow;
