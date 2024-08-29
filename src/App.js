@@ -17,13 +17,16 @@ function App() {
     <div className="App">
       {!isLoaded ? (
         <div className="loading-screen">
-         
+          {/* Loading screen content */}
         </div>
       ) : (
-        <Game />
+        <Game isLoaded={isLoaded} />
       )}
     </div>
   );
 }
 
+
 export default App;
+
+

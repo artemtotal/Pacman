@@ -31,6 +31,25 @@ class GameBoard {
     });
   }
 
+
+  createGrid(level) {
+    this.dotCount = 0;
+    this.grid = [];  // Clear the grid array
+    this.DOMGrid.innerHTML = '';  // Clears the grid visually in the DOM
+    this.DOMGrid.style.cssText = `grid-template-columns: repeat(${GRID_SIZE}, ${CELL_SIZE}px);`;
+  
+    level.forEach(square => {
+      const div = document.createElement('div');
+      div.classList.add('square', CLASS_LIST[square]);
+      div.style.cssText = `width: ${CELL_SIZE}px; height: ${CELL_SIZE}px;`;
+      this.DOMGrid.appendChild(div);  // Adds new div to DOMGrid
+      this.grid.push(div);  // Re-populate grid array with new elements
+  
+      if (CLASS_LIST[square] === OBJECT_TYPE.DOT) this.dotCount++;
+    });
+  }
+  
+
   addObject(pos, classes) {
     this.grid[pos].classList.add(...classes);
   }

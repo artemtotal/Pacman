@@ -41,12 +41,7 @@ const Game = () => {
     setGhosts(ghostsArray);
   }, []);
 
-  useEffect(() => {
-    if (pacman) {
-      document.addEventListener('keydown', handleKeyDown);
-      return () => document.removeEventListener('keydown', handleKeyDown);
-    }
-  }, [pacman]);
+
 
   useEffect(() => {
     fetchScores(); // Holen Sie sich die Punktestände, wenn die Komponente geladen wird
@@ -57,6 +52,21 @@ const Game = () => {
       pacman.handleKeyInput(e, gameBoard.objectExist.bind(gameBoard));
     }
   };
+
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (pacman) {
+        pacman.handleKeyInput(e, gameBoard.objectExist.bind(gameBoard));
+      }
+    };
+  
+    document.addEventListener('keydown', handleKeyDown);
+  
+    return () => {
+      document.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [pacman, gameBoard]);
+  
 
   const PlaydeathSound = () => {
     deathSound.play();
@@ -76,6 +86,7 @@ const Game = () => {
   };
 
   const startGame = () => {
+    // document.removeEventListener('keydown', handleKeyDown);
     setScore(0);
     setGameWin(false);
     setIsGameOver(false);
@@ -158,17 +169,6 @@ const Game = () => {
       }
     }
   };
-
-  const gameOver = () => {
-    setIsGameOver(true);
-    setGameWin(false);
-    PlaydeathSound();
-    clearInterval(gameIntervalRef.current); // Stoppt das Spiel
-    document.removeEventListener('keydown', handleKeyDown); // Event-Listener entfernen
-    gameBoard.showGameStatus(false); // Zeigt "Game Over" an
-    saveScore('Player1', score); // Speichern des Punktestandes bei Spielende
-  };
-
   const saveScore = (name, score) => {
     fetch('http://localhost:5000/save-score', {
       method: 'POST',
@@ -184,6 +184,18 @@ const Game = () => {
       })
       .catch(error => console.error('Error:', error));
   };
+  const gameOver = () => {
+    setIsGameOver(true);
+    setGameWin(false);
+    PlaydeathSound();
+    clearInterval(gameIntervalRef.current); // Stoppt das Spiel
+    saveScore('Player1', score); // Speichern des Punktestandes bei Spielende
+    document.removeEventListener('keydown', handleKeyDown); // Event-Listener entfernen
+    gameBoard.showGameStatus(false); // Zeigt "Game Over" an
+    
+  };
+
+
 
   const fetchScores = () => {
     fetch('http://localhost:5000/scores')
