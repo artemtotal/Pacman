@@ -1,12 +1,14 @@
+/* Stellt sicher, dass der Box-Model-Bereich die Rahmen und Innenabstände einschließt */
 * {
   box-sizing: border-box;
 }
 
+/* Hintergrundbild für die Webseite einstellen */
 body {
-  background: url("./Pictures/background.jpg")
- 
+  background: url("./Pictures/background.jpg");
 }
 
+/* Wrapper für das Hauptlayout der Seite */
 #wrapper {
   position: relative;
   display: flex;
@@ -15,12 +17,14 @@ body {
   justify-content: center;
 }
 
+/* Spielbereich als Inline-Gitter anzeigen */
 #game {
   position: relative;
   display: inline-grid;
   background: black;
 }
 
+/* Stil für den Status des Spiels wie "Spiel gewonnen" oder "Spiel vorbei" */
 .game-status {
   position: absolute;
   top: 0;
@@ -37,10 +41,11 @@ body {
   font-size: 1.5rem;
 }
 
+/* Stil für die Anzeige der Punktzahl */
 #score {
-  position: absolute; /* Change to absolute positioning */
-  top: 10px; /* Position it near the top */
-  left: 10px; /* Position it near the left */
+  position: absolute; /* Setze auf absolute Positionierung */
+  top: 10px; /* Positioniere es nahe der Oberkante */
+  left: 10px; /* Positioniere es nahe der linken Seite */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -51,47 +56,56 @@ body {
   color: white;
   font-family: Arial, Helvetica, sans-serif;
   font-size: 2rem;
-  margin-top: 0; /* Remove the previous margin */
+  margin-top: 0; /* Entferne den vorherigen Abstand */
 }
 
+/* Stil für den Start-Button */
 #start-button {
   margin-top: 20px;
 }
 
+/* Klasse zum Verstecken eines Elements */
 .hide {
   display: none;
 }
 
+/* Stil für quadratische Elemente */
 .square {
   display: block;
 }
 
+/* Stil für leere Bereiche im Spiel */
 .blank {
   background: black;
 }
 
+/* Stil für die Wände im Spiel */
 .wall {
   border: 1px solid blue;
 }
 
+/* Stil für Punkte im Spiel */
 .dot {
   background: white;
   border: 8px solid black;
   border-radius: 50%;
 }
 
+/* Stil für Pillen im Spiel */
 .pill {
   background: white;
   border: 5px solid black;
   border-radius: 50%;
 }
 
+/* Stil für Geister im Spiel */
 .ghost {
   position: relative;
   border-radius: 10px 10px 2px 2px;
   border: none;
 }
 
+/* Stil für die Augen der Geister */
 .ghost::before {
   content: '';
   display: block;
@@ -118,10 +132,12 @@ body {
   border: 2px solid white;
 }
 
+/* Stil für verängstigte Geister */
 .scared {
   background: blue !important;
 }
 
+/* Stil für Blinky-Geist */
 .blinky {
   background-image: url("./Pictures/AlvinPacman1.png"); /* Pfad zum Bild von Blinky */
   background-size: cover; /* Das Bild soll den gesamten Block abdecken */
@@ -131,6 +147,7 @@ body {
   border: none; /* Entfernen Sie den Rahmen, wenn er nicht benötigt wird */
 }
 
+/* Stil für Pinky-Geist */
 .pinky {
   background-image: url('./Pictures/ArtemPacman1.png'); /* Pfad zum Bild von Pinky */
   background-size: cover;
@@ -140,6 +157,7 @@ body {
   border: none;
 }
 
+/* Stil für Inky-Geist */
 .inky {
   background-image: url('./Pictures/Screenshot_69.png'); /* Pfad zum Bild von Inky */
   background-size: cover;
@@ -149,6 +167,7 @@ body {
   border: none;
 }
 
+/* Stil für Clyde-Geist */
 .clyde {
   background-image: url('./Pictures/Marcel.png'); /* Pfad zum Bild von Clyde */
   background-size: cover;
@@ -158,7 +177,7 @@ body {
   border: none;
 }
 
-
+/* Stil für Pacman */
 .pacman {
   background: yellow;
   border: none;
@@ -175,6 +194,7 @@ body {
   animation: chew 0.2s linear forwards infinite;
 }
 
+/* Animation für Pacman-Kauen */
 @keyframes chew {
   50% {
     clip-path: polygon(
@@ -189,10 +209,11 @@ body {
   }
 }
 
+/* Stil für den Titel der High Scores */
 .h2 {
-  position: absolute; /* Set position to absolute */
-  top: 10px; /* Position it near the top */
-  right: 10px; /* Position it near the right */
+  position: absolute; /* Setze Position auf absolut */
+  top: 10px; /* Positioniere es nahe der Oberkante */
+  right: 10px; /* Positioniere es nahe der rechten Seite */
   font-family: Arial, Helvetica, sans-serif;
   font-size: 1.5rem;
   color: white;
@@ -206,13 +227,11 @@ body {
   margin-top: 0; 
 }
 
-
-/* Remove the previous margin */
-
+/* Stil für die Liste der High Scores */
 .h3 {
-  position: absolute; /* Set position to absolute */
-  top: 50px; /* Position it near the top */
-  right: 10px; /* Position it near the right */
+  position: absolute; /* Setze Position auf absolut */
+  top: 50px; /* Positioniere es nahe der Oberkante */
+  right: 10px; /* Positioniere es nahe der rechten Seite */
   font-family: Arial, Helvetica, sans-serif;
   font-size: 1.5rem;
   color: white;

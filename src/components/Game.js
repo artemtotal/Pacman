@@ -5,29 +5,27 @@ import Ghost from './Ghost';
 import { LEVEL, OBJECT_TYPE } from '../setup/setup';
 import { randomMovement } from './GhostMoves';
 
-// Neue Zeile: Audio-Datei importieren
-const deathSound = new Audio('/sounds/Blyat-new.wav'); // blyat vom Artem
-const eat_ghost = new Audio('/sounds/Nam_nam_Chris_new.wav'); //  Nam nam vom Christopher
-const game_start = new Audio('/sounds/LetsdidIt_Marcel.wav'); // Marcel let did it
-const munch = new Audio('/sounds/munch.wav'); // lassen wir so
-const pill = new Audio('/sounds/Betablocker.wav'); //betablocker Hamsa
-
-
-
+// Neue Zeile: Audio-Dateien importieren
+const deathSound = new Audio('/sounds/Blyat-new.wav'); // Todessound vom Artem
+const eat_ghost = new Audio('/sounds/Nam_nam_Chris_new.wav'); // Sound für das Essen eines Geistes von Christopher
+const game_start = new Audio('/sounds/LetsdidIt_Marcel.wav'); // Startsound von Marcel
+const munch = new Audio('/sounds/munch.wav'); // Kauen-Sound
+const pill = new Audio('/sounds/Betablocker.wav'); // Pillen-Sound von Hamsa
 
 const Game = () => {
-  const [gameBoard, setGameBoard] = useState(null);
-  const [pacman, setPacman] = useState(null);
-  const [ghosts, setGhosts] = useState([]);
-  const [score, setScore] = useState(0);
-  const [gameWin, setGameWin] = useState(false);
-  const [powerPillActive, setPowerPillActive] = useState(false);
-  const [isGameOver, setIsGameOver] = useState(false);
-  const [scores, setScores] = useState([]);
-  const gameBoardRef = useRef();
-  const gameIntervalRef = useRef();
+  const [gameBoard, setGameBoard] = useState(null); // Zustand für das Spielfeld
+  const [pacman, setPacman] = useState(null); // Zustand für Pacman
+  const [ghosts, setGhosts] = useState([]); // Zustand für die Geister
+  const [score, setScore] = useState(0); // Zustand für die Punktzahl
+  const [gameWin, setGameWin] = useState(false); // Zustand für den Spielgewinn
+  const [powerPillActive, setPowerPillActive] = useState(false); // Zustand für die aktive Power-Pille
+  const [isGameOver, setIsGameOver] = useState(false); // Zustand für Spielende
+  const [scores, setScores] = useState([]); // Zustand für die Highscores
+  const gameBoardRef = useRef(); // Referenz für das Spielfeld-Element
+  const gameIntervalRef = useRef(); // Referenz für das Spiel-Intervall
 
   useEffect(() => {
+    // Initialisiert das Spielfeld und die Charaktere beim ersten Laden der Komponente
     const board = GameBoard.createGameBoard(document.querySelector('#game'), LEVEL);
     setGameBoard(board);
     const pacmanInstance = new Pacman(2, 287);
@@ -42,39 +40,51 @@ const Game = () => {
   }, []);
 
   useEffect(() => {
+    // Fügt einen Keydown-Event-Listener hinzu, wenn Pacman initialisiert ist
     if (pacman) {
       document.addEventListener('keydown', handleKeyDown);
-      return () => document.removeEventListener('keydown', handleKeyDown);
+      return () => document.removeEventListener('keydown', handleKeyDown); // Entfernt den Listener beim Demontieren
     }
   }, [pacman]);
 
   useEffect(() => {
-    fetchScores(); // Holen Sie sich die Punktestände, wenn die Komponente geladen wird
+    // Holt die Highscores, wenn die Komponente geladen wird
+    fetchScores();
   }, []);
 
+  // Handhabung der Tasteneingaben für Pacman
   const handleKeyDown = (e) => {
     if (pacman) {
       pacman.handleKeyInput(e, gameBoard.objectExist.bind(gameBoard));
     }
   };
 
+  // Spielt den Todessound ab
   const PlaydeathSound = () => {
     deathSound.play();
   };
+
+  // Spielt den Sound für das Essen eines Geistes ab
   const Playeat_ghost = () => {
     eat_ghost.play();
   };
-  
+
+  // Spielt den Startsound ab
   const Playgame_start = () => {
     game_start.play();
   };
+
+  // Spielt den Kauen-Sound ab
   const Playmunch = () => {
     munch.play();
   };
+
+  // Spielt den Pillen-Sound ab
   const Playpill = () => {
     pill.play();
   };
 
+  // Startet das Spiel, setzt alle Zustände zurück und startet die Spielschleife
   const startGame = () => {
     setScore(0);
     setGameWin(false);
@@ -89,12 +99,14 @@ const Game = () => {
     Playgame_start();
   };
 
+  // Startet die Hauptspielschleife in einem Intervall
   const startGameLoop = () => {
     gameIntervalRef.current = setInterval(() => {
       gameLoop();
     }, 80);
   };
 
+  // Die Hauptspielschleife
   const gameLoop = () => {
     // 1. Pacman bewegen
     gameBoard.moveCharacter(pacman);
@@ -139,6 +151,7 @@ const Game = () => {
     }
   };
 
+  // Überprüft Kollisionen zwischen Pacman und den Geistern
   const checkCollision = () => {
     const collidedGhost = ghosts.find(ghost => pacman.pos === ghost.pos);
 
@@ -159,6 +172,7 @@ const Game = () => {
     }
   };
 
+  // Beendet das Spiel
   const gameOver = () => {
     setIsGameOver(true);
     setGameWin(false);
@@ -169,6 +183,7 @@ const Game = () => {
     saveScore('Player1', score); // Speichern des Punktestandes bei Spielende
   };
 
+  // Speichert den Punktestand auf dem Server
   const saveScore = (name, score) => {
     fetch('http://localhost:5000/save-score', {
       method: 'POST',
@@ -179,17 +194,18 @@ const Game = () => {
     })
       .then(response => response.json())
       .then(data => {
-        console.log('Score saved:', data);
+        console.log('Score gespeichert:', data);
         fetchScores(); // Aktualisieren Sie die Punktestände nach dem Speichern
       })
-      .catch(error => console.error('Error:', error));
+      .catch(error => console.error('Fehler:', error));
   };
 
+  // Holt die gespeicherten Punktestände vom Server
   const fetchScores = () => {
     fetch('http://localhost:5000/scores')
       .then(response => response.json())
       .then(data => setScores(data))
-      .catch(error => console.error('Error:', error));
+      .catch(error => console.error('Fehler:', error));
   };
 
   return (
@@ -200,10 +216,10 @@ const Game = () => {
       {gameWin && <div>You Win!</div>}
       <button onClick={startGame}>Start Game</button>
   
-      {/* High Scores Title */}
+      {/* High Scores Titel */}
       <h2 className="h2">High Scores</h2>
   
-      {/* High Scores List */}
+      {/* High Scores Liste */}
       <div className="h3">
         <ul>
           {scores.map((s, index) => (
