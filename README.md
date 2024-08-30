@@ -1,131 +1,115 @@
 
-
 # Pacman Game
-# Our Game
 
-Ein klassisches Pacman-Spiel, entwickelt mit modernen Web-Technologien wie JavaScript, HTML, React, CSS und MySQL.
+This is a Pacman game built with React and JavaScript, featuring a backend server for saving and retrieving high scores. The game is hosted on an AWS EC2 instance with the domain name `macht.top`.
 
-## Inhaltsverzeichnis
+## Table of Contents
 
-- [Über das Projekt](#über-das-projekt)
-- [Technologien](#technologien)
+- [Getting Started](#getting-started)
+- [Prerequisites](#prerequisites)
 - [Installation](#installation)
-- [Nutzung](#nutzung)
-- [Features](#features)
-- [Datenbank-Setup](#datenbank-setup)
-- [Bekannte Probleme](#bekannte-probleme)
-- [Mitwirken](#mitwirken)
-- [Lizenz](#lizenz)
-- [Kontakt](#kontakt)
+- [Running the Application](#running-the-application)
+- [Backend Server](#backend-server)
+- [Game Controls](#game-controls)
+- [High Scores](#high-scores)
+- [Customization](#customization)
+- [Troubleshooting](#troubleshooting)
 
-## Über das Projekt
+## Getting Started
 
-Dieses Pacman-Spiel ist eine moderne Umsetzung des klassischen Spiels mit einer Web-Frontend- und Datenbank-Backend-Integration. Es ist sowohl für Einzelspieler als auch für Multiplayer-Spielmodi geeignet und speichert Highscores in einer MySQL-Datenbank.
+To run this project locally, follow the instructions below.
 
-## Technologien
+### Prerequisites
 
-- **Frontend**: HTML, CSS, JavaScript, React
-- **Backend**: Node.js, Express
-- **Datenbank**: MySQL
-- **Build-Tools**: Webpack, Babel
+Ensure you have the following installed on your machine:
 
-## Installation
+- [Node.js](https://nodejs.org/en/) (v14 or later)
+- [npm](https://www.npmjs.com/) (Node Package Manager)
+- [MySQL](https://www.mysql.com/) database server
 
-### Voraussetzungen
+### Installation
 
-Stelle sicher, dass Node.js und MySQL auf deinem System installiert sind.
+1. **Clone the repository:**
 
-Beim Entwickeln des Pacman-Spiels ist es wichtig, sicherzustellen, dass Node.js und MySQL auf deinem System installiert sind, aus den folgenden Gründen:
-1. Node.js
-Serverseitige Logik: Node.js wird für das Backend des Spiels verwendet. Es stellt die serverseitige Logik bereit, die für die Verwaltung der Spielmechanik, der Benutzerinteraktionen und der Kommunikation zwischen dem Frontend und der Datenbank notwendig ist.
-Abhängigkeiten und Pakete: Node.js ist notwendig, um die benötigten JavaScript-Bibliotheken und Frameworks zu installieren und zu verwalten, wie z.B. Express, das als Webframework dient.
-Lokaler Entwicklungsserver: Mit Node.js kannst du das Spiel auf einem lokalen Entwicklungsserver ausführen, um es während der Entwicklung zu testen und zu debuggen.
-2. MySQL
-Datenbankverwaltung: MySQL wird verwendet, um die Daten des Spiels zu speichern und zu verwalten, insbesondere die Highscores, Benutzerinformationen und Spielstände.
-Persistente Datenspeicherung: MySQL sorgt dafür, dass die Daten auch nach dem Schließen der Anwendung erhalten bleiben. So können Benutzer ihre Ergebnisse speichern und später abrufen.
-Datenbankabfragen: Das Spiel benötigt eine Datenbank, um Daten effizient zu speichern und abzurufen. MySQL bietet hierfür die nötige Performance und Funktionalität.
-Ohne diese Software wäre es nicht möglich, die volle Funktionalität des Spiels zu entwickeln und zu testen. Node.js und MySQL bilden somit die technische Grundlage für die Server- und Datenbankkomponenten des Spiels.
+   ```bash
+   git clone https://github.com/artemtotal/Pacman.git
+   cd pacman-game
+   ```
 
-### Lokale Installation
+2. **Install the dependencies:**
 
-1. Repository klonen:
-    ```bash
-    git clone https://github.com/dein-username/pacman-game.git
-    cd pacman-game
-    ```
+   ```bash
+   npm install
+   ```
 
-2. Abhängigkeiten installieren:
-    ```bash
-    npm install
-    ```
+3. **Set up the MySQL Database:**
 
-3. MySQL-Datenbank konfigurieren (siehe [Datenbank-Setup](#datenbank-setup)).
+   - Create a database named `pacman`.
+   - Run the following SQL commands to set up the `scores` table:
 
-4. Projekt starten:
-    ```bash
-    npm start
-    ```
+   ```sql
+   CREATE TABLE scores (
+       id INT AUTO_INCREMENT PRIMARY KEY,
+       name VARCHAR(255) NOT NULL,
+       score INT NOT NULL
+   );
+   ```
 
-5. Öffne deinen Browser und gehe zu `http://localhost:3000`.
+   - Update the `server.js` file with your MySQL credentials.
 
-## Nutzung
+### Running the Application
 
-- Verwende die Pfeiltasten auf deiner Tastatur, um Pacman zu steuern.
-- Sammle alle Punkte auf dem Spielfeld, um das Level abzuschließen.
-- Vermeide die Geister, oder esse eine Power-Pille, um sie zu jagen.
+1. **Start the backend server:**
 
-## Features
+   In the root directory of your project, run:
 
-- **Responsive Design**: Spielbar auf verschiedenen Gerätetypen.
-- **Multiplayer-Modus**: Spiele gegen Freunde oder andere Online-Spieler.
-- **Highscore-Tabelle**: Speichert und zeigt die besten Spielergebnisse.
+   ```bash
+   node server.js
+   ```
 
-## Datenbank-Setup
+   This will start the Express server on `http://localhost:5000`.
 
-1. Erstelle eine MySQL-Datenbank:
-    ```sql
-    CREATE DATABASE pacman_game;
-    ```
+2. **Start the React frontend:**
 
-2. Importiere das Datenbankschema:
-    ```bash
-    mysql -u yourusername -p pacman_game < database/schema.sql
-    ```
+   Open another terminal window in the root directory and run:
 
-3. Konfiguriere die Datenbankverbindung in `config/database.js`:
-    ```javascript
-    module.exports = {
-        host: "localhost",
-        user: "yourusername",
-        password: "yourpassword",
-        database: "pacman_game"
-    };
-    ```
+   ```bash
+   npm start
+   ```
 
-## Bekannte Probleme
+   This will start the React development server on `http://localhost:3000`.
 
-- **Geister-KI**: Die Bewegungsmuster der Geister sind manchmal unvorhersehbar.
-- **Performance**: Bei älteren Geräten kann es zu Performance-Problemen kommen.
+### Backend Server
 
-## Mitwirken
+The backend server (`server.js`) is built using Express and is responsible for handling high score storage and retrieval. It connects to a MySQL database and provides the following API endpoints:
 
-Beiträge sind willkommen! Bitte folge diesen Schritten:
+- `POST /save-score`: Saves a player's score to the database.
+- `GET /scores`: Retrieves all high scores, sorted in descending order.
 
-1. Forke das Repository
-2. Erstelle einen neuen Branch (`git checkout -b feature/DeinFeature`)
-3. Committe deine Änderungen (`git commit -am 'Füge neues Feature hinzu'`)
-4. Push den Branch (`git push origin feature/DeinFeature`)
-5. Erstelle einen Pull Request
+### Game Controls
 
-## Lizenz
+- **Arrow Keys**: Move Pacman in the respective direction.
 
-Dieses Projekt steht unter der MIT-Lizenz. Weitere Informationen findest du in der [LICENSE-Datei](LICENSE).
 
-## Kontakt
+### High Scores
 
-Erstellt von [Dein Name](https://github.com/dein-username) - kontaktiere mich gerne bei Fragen!
+The high scores are displayed on the right side of the game screen. They are fetched from the backend server each time the game loads or a new score is saved.
 
----
+### Customization
 
-Diese Vorlage sollte dir als Ausgangspunkt dienen. Du kannst sie anpassen, um zusätzliche Informationen oder spezifische Details zu deinem Projekt hinzuzufügen.
+You can customize various aspects of the game, including:
+
+- **Game Board**: Modify the `GameBoard.js` file to change the grid and object behaviors.
+- **Ghost AI**: Adjust ghost behaviors in the `Ghost.js` and `GhostMoves.js` files.
+- **Sounds**: Change the audio files located in the `/sounds` directory and update their references in `Game.js`.
+
+### Troubleshooting
+
+- **Game not loading**: Ensure both the frontend (`npm start`) and backend (`node server.js`) servers are running.
+- **Database errors**: Double-check your MySQL connection settings in `server.js` and ensure the database and `scores` table are correctly set up.
+
+## Acknowledgments
+
+This project is inspired by the classic Pacman game and serves as an educational example for building a full-stack application with React and Node.js.
+
 
