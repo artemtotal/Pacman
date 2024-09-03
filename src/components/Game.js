@@ -49,7 +49,7 @@ const Game = () => {
   }, [pacman]);
 
   useEffect(() => {
-    fetchScores(); // Holen Sie sich die Punktestände, wenn die Komponente geladen wird
+    fetchScores();
   }, []);
 
   const handleKeyDown = (e) => {
@@ -180,8 +180,7 @@ const Game = () => {
       .then(response => response.json())
       .then(data => {
         console.log('Score saved:', data);
-        fetchScores(); // Aktualisieren Sie die Punktestände nach dem Speichern
-      })
+        fetchScores(); 
       .catch(error => console.error('Error:', error));
   };
 

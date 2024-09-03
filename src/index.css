@@ -123,19 +123,19 @@ body {
 }
 
 .blinky {
-  background-image: url("./Pictures/AlvinPacman1.png"); /* Pfad zum Bild von Blinky */
-  background-size: cover; /* Das Bild soll den gesamten Block abdecken */
-  width: 20px; /* Setzen Sie die Breite des Bildes */
-  height: 20px; /* Setzen Sie die Höhe des Bildes */
-  border-radius: 10px 10px 2px 2px; /* Falls Sie eine Abrundung benötigen */
-  border: none; /* Entfernen Sie den Rahmen, wenn er nicht benötigt wird */
+  background-image: url("./Pictures/AlvinPacman1.png"); 
+  background-size: cover; 
+  width: 20px; 
+  height: 20px; 
+  border-radius: 10px 10px 2px 2px; 
+  border: none; 
 }
 
 .pinky {
-  background-image: url('./Pictures/ArtemPacman1.png'); /* Pfad zum Bild von Pinky */
+  background-image: url('./Pictures/ArtemPacman1.png'); 
   background-size: cover;
-  width: 20px; /* Setzen Sie die Breite des Bildes */
-  height: 20px; /* Setzen Sie die Höhe des Bildes */
+  width: 20px; 
+  height: 20px; 
   border-radius: 10px 10px 2px 2px;
   border: none;
 }
@@ -143,8 +143,8 @@ body {
 .inky {
   background-image: url('./Pictures/Screenshot_69.png'); /* Pfad zum Bild von Inky */
   background-size: cover;
-  width: 20px; /* Setzen Sie die Breite des Bildes */
-  height: 20px; /* Setzen Sie die Höhe des Bildes */
+  width: 20px; 
+  height: 20px; 
   border-radius: 10px 10px 2px 2px;
   border: none;
 }
@@ -152,8 +152,8 @@ body {
 .clyde {
   background-image: url('./Pictures/Marcel.png'); /* Pfad zum Bild von Clyde */
   background-size: cover;
-  width: 20px; /* Setzen Sie die Breite des Bildes */
-  height: 20px; /* Setzen Sie die Höhe des Bildes */
+  width: 20px; 
+  height: 20px; 
   border-radius: 10px 10px 2px 2px;
   border: none;
 }
