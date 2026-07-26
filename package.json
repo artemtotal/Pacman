@@ -2,6 +2,9 @@
   "name": "pacman-game",
   "version": "0.1.0",
   "private": true,
+  "overrides": {
+    "shell-quote": "^1.8.2"
+  },
   "dependencies": {
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
