@@ -180,7 +180,8 @@ const Game = () => {
       .then(response => response.json())
       .then(data => {
         console.log('Score saved:', data);
-        fetchScores(); 
+        fetchScores();
+      })
       .catch(error => console.error('Error:', error));
   };
 

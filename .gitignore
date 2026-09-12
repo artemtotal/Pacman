@@ -34,3 +34,6 @@ coverage/
 
 # Windows system files
 Thumbs.db
+
+# Production build
+build/
